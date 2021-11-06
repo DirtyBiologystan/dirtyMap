@@ -127,6 +127,11 @@ oReq.addEventListener("load", (event)=>{
     }
     return accu;
   },{});
+  const orderColors = Object.keys(countColors).sort((color1,color2)=> countColors[color2]-countColors[color1]);
+  countColors =orderColors.reduce((accu,key)=>{
+    accu[key]=countColors[key];
+    return accu;
+  },{});
   genereGraph(countColors);
   countColorsMap =Object.keys(countColors).reduce((accu,color)=>{
     accu[color]=true;
