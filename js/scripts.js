@@ -300,10 +300,10 @@ document.addEventListener("keydown",(event)=>{
       moveX=5;
       break;
     case 65:
-      scale=1.001;
+      scale=1.01;
       break;
     case 69:
-      scale=0.999;
+      scale=0.99;
       break;
   }
 });
