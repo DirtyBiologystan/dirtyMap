@@ -158,8 +158,8 @@ oReq.addEventListener("load", (event)=>{
 
     return button
   }));
-  const texthelp = document.createElement("p");
-  button.innerText="ZQSD: déplacé la carte | AE: zoom";
+  const texthelp = document.createElement("span");
+  texthelp.innerText="controle= ZQSD: déplacé la carte | AE: zoom";
 
   barnav.append(texthelp)
 
