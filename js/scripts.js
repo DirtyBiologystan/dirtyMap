@@ -265,7 +265,7 @@ async function calculPos(x,y){
 }
 
 document.addEventListener("keydown",(event)=>{
-  if([83,90,68,81,65,69].indexOf(event.keyCode)){
+  if([83,90,68,81,65,69].indexOf(event.keyCode) != -1){
     if(!time){
       time = setInterval(()=>{
         console.log(mapElement.style.top,mapElement.style.left,mapElement.style.transform)
