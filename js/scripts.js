@@ -158,7 +158,10 @@ oReq.addEventListener("load", (event)=>{
 
     return button
   }));
+  const texthelp = document.createElement("p");
+  button.innerText="ZQSD: déplacé la carte | AE: zoom";
 
+  barnav.append(texthelp)
 
   stats.innerHTML=Object.keys(countColors).reduce((accu,key)=>{
     if(key === "#000000")
