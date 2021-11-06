@@ -67,8 +67,8 @@ blockquote, dl, figure, form, ol, p, pre, table, ul {
 }
 
 #barnav{
-  position:fixed;
-  display: block;
+  position: fixed;
+  display: none;
   background-color:#fff;
   bottom:0;
   left:0;

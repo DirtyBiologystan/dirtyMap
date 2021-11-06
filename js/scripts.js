@@ -353,6 +353,7 @@ mapElement.parentNode.addEventListener("mousemove",async (event)=>{
   const x=Math.floor((event.x - pos.x)/(10*scaleValue));
   const y=Math.floor((event.y - pos.y)/(10*scaleValue));
   const casse = table[x][y];
+  barnav.style.display="block";
   if(moveMap){
     infobulle.style.display="block";
     if(window.innerHeight - event.y - 60  < infobulle.clientHeight){
@@ -383,7 +384,7 @@ mapElement.parentNode.addEventListener("mouseleave",(event)=>{
   if(moveMap){
     infobulle.style.display="none";
   }
-
+  barnav.style.display="none";
 });
 hex.addEventListener("change", (event)=>{
   text.innerText="calcule en cours";
