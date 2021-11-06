@@ -76,6 +76,6 @@ blockquote, dl, figure, form, ol, p, pre, table, ul {
 }
 #camMap{
   overflow: hidden;
-  width: 500px;
-  height: 500px;
+  width: 112rem;
+  height: 112rem;
 }
