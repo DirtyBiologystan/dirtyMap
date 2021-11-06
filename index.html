@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <title>Statistiques du Dirtybiologistan</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+</head>
+<body>
+  <div class="wrapper">
+
+    <section class="container">
+      <h3 class="title">Page des statistiques du Dirtybiologistan</h3>
+      <p class="description">
+        <div >
+          Créateur : CoDaTi#3827<br/>
+          Design et le graphique: youkou#0125<br/>
+          Liste des départements et leurs coordonnées: Kabolop#1089<br/>
+          <!-- merci à Rheaven#6993 pour sa relecture et correction de l'orthographe (c'est lui qui m'a demandé à être uniquement en commentaire ^^ ) -->
+        </div>
+        <div >
+          <a href="https://docs.google.com/spreadsheets/d/1pnkpuZw__XIgHiccc12bIRnRCvAimfI6vVouKfeT5-c/edit#gid=0">google doc des regions</a><br/>
+          <a href="https://scrollingbird.com/biology.html">Pour trouver le pseudo des personnes pour tenter de dessiner quelque chose sur notre beau drapeau</a>
+        </div>
+      </p>
+    </section>
+
+    <section class="container">
+      <fieldset>
+        <legend class="center">Tester la popularité d'une couleur</legend>
+        <div id="text">chargement en cours</div>
+        <form onsubmit="return false">
+          <input disabled type="color" id="color" class="inputCodati" />
+          <input disabled type="text" id="hex" class="inputCodati" />
+        </form>
+      </fieldset>
+    </section>
+
+    <section class="container">
+      <fieldset>
+        <legend class="center">Information sur un pixel</legend>
+
+        <div>Les couleurs les plus populaires (celles qui dépassent les 50 utilisations) :</div>
+        <form onsubmit="return false">
+          <input disabled type="number" id="textx" value="1" min="1" class="inputCodati"/>X
+          <input disabled type="number" id="texty" value="1" min="1" class="inputCodati"/>
+        </form>
+        <div id="textInfoPixel">chargement en cours</div>
+      </fieldset>
+    </section>
+
+    <section class="container">
+      <fieldset>
+        <legend class="center">Couleurs choisies par plus de 5 utilisateurs</legend>
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <p id="stats"></p>
+      </fieldset>
+    </section>
+
+    <section class="container">
+      <fieldset>
+        <legend class="center">Carte</legend>
+        <div>
+          <span id="infobulle"></span>
+          <div id="camMap">
+            <canvas id="map"></canvas>
+          </div>
+        </div>
+        <div id="barnav"></div>
+      </fieldset>
+    </section>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" charset="utf-8"></script>
+<script src="js/scripts.js"></script>
+</html>
