@@ -51,12 +51,14 @@ const color = document.getElementById("color");
 const hex = document.getElementById("hex");
 const textx = document.getElementById("textx");
 const texty = document.getElementById("texty");
+const textResearchpseudo = document.getElementById("textResearchpseudo");
 const stats = document.getElementById("stats");
 const textInfoPixel = document.getElementById("textInfoPixel");
 const mapElement = document.getElementById("map");
 const infobulle = document.getElementById("infobulle");
 const barnav = document.getElementById("barnav");
 const camMap = document.getElementById("camMap");
+
 const map = mapElement.getContext('2d');
 
 
@@ -93,6 +95,7 @@ oReq.addEventListener("load", (event)=>{
   color.disabled=false;
   textx.disabled=false;
   texty.disabled=false;
+  textResearchpseudo.disabled=false;
 
   let coordonne= r(datas.length,0.5);
   table=datas.reduce((accu,data,index)=>{
@@ -432,6 +435,44 @@ color.addEventListener("change", (event)=>{
   },0)
 });
 
+textResearchpseudo.addEventListener("keyup",(event)=>{
+  if(event.target.value.length >= 3){
+    var oReq = new XMLHttpRequest();
+    oReq.addEventListener("load", (event)=>{
+      const pixels=JSON.parse(event.target.response);
+      console.log(pixels);
+      // const region = getRegion(x,y);
+
+      const list = document.createElement("ul");
+      list.append(...pixels.map((pixel)=>{
+        console.log(pixel)
+        let backgroundColor= "#fff";
+        if(pixel.hexColor === "#FFFFFF")
+        {
+          backgroundColor="#000";
+        }
+        const elementIl = document.createElement("il");
+        elementIl.innerText = pixel.pseudo;
+        const elementUl = document.createElement("ul");
+        elementUl.innerHTML = `
+          <li>x: ${pixel.x}</li>
+          <li>y: ${pixel.y}</li>
+          <li>Couleur: <span style="background-color:${backgroundColor};color:${pixel.hexColor}">${pixel.hexColor}</span></li>
+          <li>indexInFlag: ${pixel.indexInFlag}</li>`;
+        elementIl.append(elementUl);
+        return elementIl;
+      }));
+      textInfoPixel.innerHTML=`nombre de résulta:${pixels.length}`;
+      textInfoPixel.append(list);
+    })
+    oReq.open("GET", `https://api.codati.ovh/pixels/?q=${event.target.value}`);
+
+    oReq.send();
+  }else{
+    textInfoPixel.innerHTML="";
+  }
+
+})
 
 textx.addEventListener("change", (event)=>{
   text.textInfoPixel="calcule en cours";
