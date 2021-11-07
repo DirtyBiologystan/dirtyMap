@@ -346,7 +346,6 @@ mapElement.parentNode.addEventListener("mousemove",async (event)=>{
   const pos = event.target.getBoundingClientRect()
   const x=Math.floor((event.x - pos.x)/(10*scaleValue));
   const y=Math.floor((event.y - pos.y)/(10*scaleValue));
-  const casse = table[x][y];
   barnav.style.display="block";
   if(moveMap){
     infobulle.style.display="block";
@@ -362,7 +361,8 @@ mapElement.parentNode.addEventListener("mousemove",async (event)=>{
       infobulle.style.left=event.x +"px";
 
     }
-    if( table[x][y]){
+    if(table&& table[x] && table[x][y]){
+      const casse = table[x][y];
 
       infobulle.innerText=`position: ${x+1} ${y+1}
       couleur:${casse.hexColor}
