@@ -87,7 +87,6 @@ function r(e, t) {
 
 var oReq = new XMLHttpRequest();
 oReq.addEventListener("load", (event)=>{
-  console.log("test");
   datas = JSON.parse(event.target.response);
 
   hex.disabled=false;
@@ -95,7 +94,6 @@ oReq.addEventListener("load", (event)=>{
   textx.disabled=false;
   texty.disabled=false;
 
-  console.log(datas)
   let coordonne= r(datas.length,0.5);
   table=datas.reduce((accu,data,index)=>{
 
@@ -184,7 +182,6 @@ oReq.addEventListener("load", (event)=>{
   mapElement.width=table.length * 10;
   mapElement.height=table[0].length * 10;
 
-  console.log( table.length, table[0].length)
   drowMap();
 });
 oReq.open("GET", "https://api-flag.fouloscopie.com/flag");
@@ -236,11 +233,9 @@ async function getUserName(author){
   })
 }
 function getRegion(x,y) {
-  console.log(regions)
   const region = regions.find((region)=>{
     return region.min.x <= x && region.min.y <= y && region.max.x >= x && region.max.y >= y
   });
-  console.log(region)
   return region || {name:"n'a pas encore de nom"};
 }
 
@@ -262,7 +257,6 @@ async function calculPos(x,y){
     backgroundColor="#fff";
   }
   const region = getRegion(x,y);
-  console.log(region)
   textInfoPixel.innerHTML = `couleur: <span style="background-color:${backgroundColor};color:${caseOfTable.hexColor};border: solid 1px #000;">${caseOfTable.hexColor}</span><br/>
   index: ${caseOfTable.indexInFlag}<br/>
   Département:${region.name}<br/>
@@ -276,7 +270,6 @@ document.addEventListener("keydown",(event)=>{
   if([83,90,68,81,65,69].indexOf(event.keyCode) != -1){
     if(!time){
       time = setInterval(()=>{
-        console.log(mapElement.style.top,mapElement.style.left,mapElement.style.transform)
         if(mapElement.style.top){
 
           mapElement.style.top = (parseInt(mapElement.style.top)+moveY)+"px" ;
@@ -289,7 +282,6 @@ document.addEventListener("keydown",(event)=>{
           mapElement.style.left = "0px" ;
         }
         scaleValue = scaleValue * scale;
-        console.log(scaleValue)
         mapElement.style.transform  =`scale(${scaleValue}, ${scaleValue})`;
       },10)
     }
@@ -316,7 +308,6 @@ document.addEventListener("keydown",(event)=>{
   }
 });
 document.addEventListener("keyup",(event)=>{
-  console.log("keyup",event.keyCode)
   switch (event.keyCode) {
     case 90:
     case 83:
@@ -353,8 +344,6 @@ mapElement.parentNode.addEventListener("click",async (event)=>{
 });
 mapElement.parentNode.addEventListener("mousemove",async (event)=>{
   const pos = event.target.getBoundingClientRect()
-  console.log(event.x,window.innerWidth);
-  console.log(event.y,window.innerHeight);
   const x=Math.floor((event.x - pos.x)/(10*scaleValue));
   const y=Math.floor((event.y - pos.y)/(10*scaleValue));
   const casse = table[x][y];
