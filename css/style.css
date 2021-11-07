@@ -78,4 +78,5 @@ blockquote, dl, figure, form, ol, p, pre, table, ul {
   overflow: hidden;
   width: calc(100vw - 70px);
   height: calc(100vh - 30px);
+  background-color: #e6e6e6;
 }
