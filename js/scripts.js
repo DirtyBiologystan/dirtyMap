@@ -413,7 +413,7 @@ mapElement.parentNode.addEventListener("mouseleave",(event)=>{
   }
   barnav.style.display="none";
 });
-hex.addEventListener("change", (event)=>{
+hex.addEventListener("keyup", (event)=>{
   text.innerText="calcule en cours";
   if(!event.target.value.startsWith("#")){
     hex.value = `#${hex.value}`
@@ -474,14 +474,14 @@ textResearchpseudo.addEventListener("keyup",(event)=>{
 
 })
 
-textx.addEventListener("change", (event)=>{
+textx.addEventListener("keyup", (event)=>{
   text.textInfoPixel="calcule en cours";
   setTimeout(()=>{
     calculPos(textx.value,texty.value);
   },0)
 });
 
-texty.addEventListener("change", (event)=>{
+texty.addEventListener("keyup", (event)=>{
   text.textInfoPixel="calcule en cours";
   setTimeout(()=>{
     calculPos(textx.value,texty.value);
