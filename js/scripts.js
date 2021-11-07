@@ -161,27 +161,28 @@ oReq.addEventListener("load", (event)=>{
 
     return button
   }));
-  const texthelp = document.createElement("span");
-  texthelp.innerText="controle= ZQSD: déplacé la carte | AE: zoom";
+const texthelp = document.createElement("span");
+texthelp.innerText="controle= ZQSD: déplacé la carte | AE: zoom";
 
-  barnav.append(texthelp)
+barnav.append(texthelp)
 
-  const buttonFullScren = document.createElement("button");
-  buttonFullScren.innerText="full scren";
-  buttonFullScren.addEventListener("click",()=>{
-    if (document.fullscreenElement) {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-        buttonFullScren.innerText="full scren";
-      }
-    } else {
-      camMap.requestFullscreen();
-      buttonFullScren.innerText="exit";
-
+const buttonFullScren = document.createElement("button");
+buttonFullScren.innerText="full scren";
+buttonFullScren.addEventListener("click",()=>{
+  if (document.fullscreenElement) {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+      buttonFullScren.innerText="full scren";
     }
-  });
-  barnav.append(buttonFullScren)
-  stats.innerHTML=Object.keys(countColors).reduce((accu,key)=>{
+  } else {
+    camMap.requestFullscreen();
+    buttonFullScren.innerText="exit";
+
+  }
+});
+barnav.append(buttonFullScren);
+
+stats.innerHTML=Object.keys(countColors).reduce((accu,key)=>{
     if(key === "#000000")
     {
       return`${accu}<span style="background-color:${key};border: solid 1px #000;color:#fff">${key} ${countColors[key]} soit ${(countColors[key]/total)*100}%</span><br/>`;
@@ -280,6 +281,20 @@ async function calculPos(x,y){
   pseudo:${tableOfPseudo[caseOfTable.author] ? tableOfPseudo[caseOfTable.author].last_name : (await getUserName(caseOfTable.author)).last_name}`;
 
 }
+camMap.addEventListener("wheel",(event)=>{
+  if(document.fullscreenElement){
+    if(event.deltaY < 0)
+    {
+      scaleValue = scaleValue * 1.05;
+    }else{
+      scaleValue = scaleValue * 0.95;
+
+    }
+
+    console.log(event.deltaY,scaleValue)
+    mapElement.style.transform  =`scale(${scaleValue}, ${scaleValue})`;
+  }
+})
 
 document.addEventListener("keydown",(event)=>{
   if([83,90,68,81,65,69].indexOf(event.keyCode) != -1){
