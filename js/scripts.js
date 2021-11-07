@@ -166,6 +166,21 @@ oReq.addEventListener("load", (event)=>{
 
   barnav.append(texthelp)
 
+  const buttonFullScren = document.createElement("button");
+  buttonFullScren.innerText="full scren";
+  buttonFullScren.addEventListener("click",()=>{
+    if (document.fullscreenElement) {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+        buttonFullScren.innerText="full scren";
+      }
+    } else {
+      camMap.requestFullscreen();
+      buttonFullScren.innerText="exit";
+
+    }
+  });
+  barnav.append(buttonFullScren)
   stats.innerHTML=Object.keys(countColors).reduce((accu,key)=>{
     if(key === "#000000")
     {
