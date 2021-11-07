@@ -258,7 +258,7 @@ async function calculPos(x,y){
   }
   const region = getRegion(x,y);
   textInfoPixel.innerHTML = `couleur: <span style="background-color:${backgroundColor};color:${caseOfTable.hexColor};border: solid 1px #000;">${caseOfTable.hexColor}</span><br/>
-  index: ${caseOfTable.indexInFlag}<br/>
+  indexInFlag: ${caseOfTable.indexInFlag}<br/>
   Département:${region.name}<br/>
   Région:${region.region}<br/>
   Discord du départements:<a href="${region.discord}">${region.discord}</a><br/>
