@@ -270,20 +270,20 @@ async function calculPos(x,y){
     return;
   }
   const caseOfTable = table[x-1][y-1]
-  let backgroundColor= "#000";
-  if(caseOfTable.hexColor === "#000000")
+  let backgroundColor= "#fff";
+  if(caseOfTable.hexColor === "#FFFFFF")
   {
-    backgroundColor="#fff";
+    backgroundColor="#000";
   }
   const region = getRegion(x,y);
-  textInfoPixel.innerHTML = `couleur: <span style="background-color:${backgroundColor};color:${caseOfTable.hexColor};border: solid 1px #000;">${caseOfTable.hexColor}</span><br/>
+  textInfoPixel.innerHTML = `couleur: <span style="background-color:${backgroundColor};color:${caseOfTable.hexColor};">${caseOfTable.hexColor}</span><br/>
   indexInFlag: ${caseOfTable.indexInFlag}<br/>
   Département:${region.name}<br/>
   Région:${region.region}<br/>
   Discord du départements:<a href="${region.discord}">${region.discord}</a><br/>
   pseudo:${tableOfPseudo[caseOfTable.author] ? tableOfPseudo[caseOfTable.author].last_name : (await getUserName(caseOfTable.author)).last_name}`;
-
 }
+
 camMap.addEventListener("wheel",(event)=>{
   if(document.fullscreenElement){
     if(event.deltaY < 0)
