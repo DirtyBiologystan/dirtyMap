@@ -178,11 +178,11 @@ oReq.addEventListener("load", (event)=>{
 
 
   text.innerText="Chargement des données complété";
-  textInfoPixel.innerText="Chargement des données complété";
   mapElement.width=table.length * 10;
   mapElement.height=table[0].length * 10;
 
   drowMap();
+  calculPos(1,1);
 });
 oReq.open("GET", "https://api-flag.fouloscopie.com/flag");
 
