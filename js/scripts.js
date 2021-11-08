@@ -11,9 +11,18 @@ let moveX=0;
 let moveY=0;
 let scale=1;
 let scaleValue=1;
+let regionColor={};
+let regionToto;
+let myChart;
 window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
 window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
+
+const socket = io("https://api.codati.ovh/");
+socket.on("connect",()=>{
+  socket.emit("newPixel");
+  socket.emit("changePixel");
+});
 
 let dbP = new Promise((resolve)=>{
   const request = window.indexedDB.open("pseudo",1);
@@ -58,6 +67,9 @@ const mapElement = document.getElementById("map");
 const infobulle = document.getElementById("infobulle");
 const barnav = document.getElementById("barnav");
 const camMap = document.getElementById("camMap");
+const selectionRegion = document.getElementById("selectionRegion");
+const nbPixels = document.getElementById("nbPixels");
+
 
 const map = mapElement.getContext('2d');
 
@@ -112,16 +124,48 @@ oReq.addEventListener("load", (event)=>{
     };
     return accu;
   },[]);
-  const total = datas.length;
+  let total = datas.length;
+  console.log(regions)
+  regionToto= regions.reduce((accu,region)=>{
+    accu[region.name]=(region.max.x-region.min.x)*(region.max.y-region.min.y);
+    return accu;
+  },{})
+  console.log(regionToto)
+  regionToto["tout"]=total;
 
-  countColors=datas.reduce((accu,data)=>{
-    if(accu[data.hexColor]){
-      accu[data.hexColor]=accu[data.hexColor]+1;
+  countColors=datas.reduce((accu,casse,i)=>{
+    const {name} = getRegion(coordonne[i].x,coordonne[i].y);
+    if(!regionColor[name]){
+      regionColor[name]=[]
+    }
+    if(regionColor[name][casse.hexColor]){
+      regionColor[name][casse.hexColor]=regionColor[name][casse.hexColor]+1;
     } else {
-      accu[data.hexColor]=1
+      regionColor[name][casse.hexColor]=1
+    }
+    if(accu[casse.hexColor]){
+      accu[casse.hexColor]=accu[casse.hexColor]+1;
+    } else {
+      accu[casse.hexColor]=1
     }
     return accu;
   },{});
+  regionColor=Object.keys(regionColor).reduce((accu1,regionColorKeys)=>{
+    accu1[regionColorKeys] = Object.keys(regionColor[regionColorKeys]).reduce((accu2,color)=>{
+        if(regionColor[regionColorKeys][color] > 5){
+          accu2[color] = regionColor[regionColorKeys][color];
+        }
+        return accu2;
+      },{});
+
+    const orderColors = Object.keys(accu1[regionColorKeys]).sort((color1,color2)=> accu1[regionColorKeys][color2]-accu1[regionColorKeys][color1]);
+    accu1[regionColorKeys] =orderColors.reduce((accu2,key)=>{
+      accu2[key]=accu1[regionColorKeys][key];
+      return accu2;
+    },{});
+    return accu1;
+  },{});
+
   countColors =Object.keys(countColors).reduce((accu,color)=>{
     if(countColors[color] > 50){
       accu[color]=countColors[color];
@@ -133,6 +177,8 @@ oReq.addEventListener("load", (event)=>{
     accu[key]=countColors[key];
     return accu;
   },{});
+
+
   genereGraph(countColors);
   countColorsMap =Object.keys(countColors).reduce((accu,color)=>{
     accu[color]=true;
@@ -164,6 +210,8 @@ oReq.addEventListener("load", (event)=>{
 
     return button
   }));
+
+
 const texthelp = document.createElement("span");
 texthelp.innerText="controle= ZQSD: déplacé la carte | AE: zoom";
 
@@ -185,28 +233,80 @@ buttonFullScren.addEventListener("click",()=>{
 });
 barnav.append(buttonFullScren);
 
-stats.innerHTML=Object.keys(countColors).reduce((accu,key)=>{
-    if(key === "#000000")
-    {
-      return`${accu}<span style="background-color:${key};border: solid 1px #000;color:#fff">${key} ${countColors[key]} soit ${(countColors[key]/total)*100}%</span><br/>`;
+selectionRegion.append(...Object.keys(regionColor).map((regionColorKey)=>{
+  const option = document.createElement("option");
+  option.value=regionColorKey;
+  option.innerText=regionColorKey;
+  return option
+}));
+nbPixels.innerHTML=`Nombre total de pixels : ${total} soit ${table.length} X ${table[0].length}`
 
-      }else{
-      return`${accu}<span style="background-color:${key};border: solid 1px #000;">${key} ${countColors[key]} soit ${(countColors[key]/total)*100}%</span><br/>`;
-    }
-  },`<span>Nombre total de pixels : ${total} soit ${table.length} X ${table[0].length}</span><br/>`);
+selectionRegion.addEventListener("change",(event)=>{
+  if(event.target.value === "tout"){
+    calculeStat(countColors,total);
+  }else{
+    calculeStat(regionColor[event.target.value],regionToto[event.target.value]);
+  }
+});
 
 
   text.innerText="Chargement des données complété";
-  mapElement.width=table.length * 10;
-  mapElement.height=table[0].length * 10;
+  mapElement.width=(table.length +10) * 10;
+  mapElement.height=(table[0].length+10) * 10;
 
   drowMap();
   calculPos(1,1);
+  socket.on("newPixel",(pixel)=>{
+    pixel.x--;
+    pixel.y--;
+    if(!table[pixel.x]){
+      table[pixel.x]=[]
+    }
+    table[pixel.x][pixel.y]=pixel;
+    total++;
+    nbPixels.innerText=`Nombre total de pixels : ${total} soit ${table.length} X ${table[0].length}`;
+    drowPixel(pixel);
+  });
+  socket.on("changePixel",(pixel)=>{
+    pixel.x--;
+    pixel.y--;
+    if(pixel.author === "0b28f6ed-2652-428e-9fe7-3a93f6d832d5"){
+      console.log("moi!!!!!!!!!!!!!!");
+      console.log(pixel);
+    }
+    table[pixel.x][pixel.y]=pixel;
+    drowPixel(pixel);
 });
+
+});
+
 oReq.open("GET", "https://api-flag.fouloscopie.com/flag");
 
 oReq.send();
 
+
+function calculeStat(data,total){
+  stats.innerHTML=Object.keys(data).reduce((accu,key)=>{
+    if(total){
+      if(key === "#000000")
+      {
+        return`${accu}<span style="background-color:${key};border: solid 1px #000;color:#fff">${key} ${data[key]} soit ${(data[key]/total)*100}%</span><br/>`;
+
+        }else{
+        return`${accu}<span style="background-color:${key};border: solid 1px #000;">${key} ${data[key]} soit ${(data[key]/total)*100}%</span><br/>`;
+      }
+    }else{
+      if(key === "#000000")
+      {
+        return`${accu}<span style="background-color:${key};border: solid 1px #000;color:#fff">${key} ${data[key]}</span><br/>`;
+
+        }else{
+        return`${accu}<span style="background-color:${key};border: solid 1px #000;">${key} ${data[key]}</span><br/>`;
+      }
+    }
+
+    },"");
+}
 function drowMap(){
   const flatmap = table.flat();
   map.clearRect(0,0, mapElement.width, mapElement.height);
@@ -218,8 +318,18 @@ function drowMap(){
       map.fillStyle = pixel.hexColor;
       map.fillRect(pixel.x * 10, pixel.y * 10, 10, 10);
     }
-
   });
+}
+function drowPixel(pixel){
+  if(countColorsMap[pixel.hexColor]===true){
+    map.fillStyle = pixel.hexColor;
+    map.clearRect(pixel.x * 10,pixel.y * 10, 10, 10);
+    map.fillRect(pixel.x * 10, pixel.y * 10, 10, 10);
+  }else if(countColorsMap[pixel.hexColor]===undefined && countColorsMap.autre){
+    map.fillStyle = pixel.hexColor;
+    map.clearRect(pixel.x * 10,pixel.y * 10, 10, 10);
+    map.fillRect(pixel.x * 10, pixel.y * 10, 10, 10);
+  }
 }
 
 async function getUserName(author){
@@ -278,6 +388,7 @@ async function calculPos(x,y){
   const region = getRegion(x,y);
   textInfoPixel.innerHTML = `couleur: <span style="background-color:${backgroundColor};color:${caseOfTable.hexColor};">${caseOfTable.hexColor}</span><br/>
   indexInFlag: ${caseOfTable.indexInFlag}<br/>
+  author: ${caseOfTable.author}<br/>
   Département:${region.name}<br/>
   Région:${region.region}<br/>
   Discord du départements:<a href="${region.discord}">${region.discord}</a><br/>
@@ -494,11 +605,11 @@ function genereGraph(tab) {
   const listeLabel = [];
   let totalsUser = 0;
   let reste = 0
-  const total = datas.length;
+  let total = datas.length;
 
-  listeIndexHexa = Object.keys(countColors);
+  listeIndexHexa = Object.keys(tab);
   for (var i = 0; i < listeIndexHexa.length; i++) {
-    valeur = (countColors[listeIndexHexa[i]]/total)*100;
+    valeur = (tab[listeIndexHexa[i]]/total)*100;
     totalsUser = totalsUser+valeur;
     listeValue.push(valeur);
     listeLabel.push(listeIndexHexa[i]+" ");
@@ -509,7 +620,8 @@ function genereGraph(tab) {
 
   listeIndexHexa.push("#00000000");
   const ctx = document.getElementById('myChart').getContext('2d');
-  const myChart = new Chart(ctx, {
+
+  myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
       labels: listeLabel,
