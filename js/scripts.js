@@ -328,13 +328,12 @@ function drowMap() {
 }
 
 function drowPixel(pixel) {
+  map.clearRect(pixel.x * 10, pixel.y * 10, 10, 10);
   if (countColorsMap[pixel.hexColor] === true) {
     map.fillStyle = pixel.hexColor;
-    map.clearRect(pixel.x * 10, pixel.y * 10, 10, 10);
     map.fillRect(pixel.x * 10, pixel.y * 10, 10, 10);
   } else if (countColorsMap[pixel.hexColor] === undefined && countColorsMap.autre) {
     map.fillStyle = pixel.hexColor;
-    map.clearRect(pixel.x * 10, pixel.y * 10, 10, 10);
     map.fillRect(pixel.x * 10, pixel.y * 10, 10, 10);
   }
 }
