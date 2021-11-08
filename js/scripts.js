@@ -521,7 +521,7 @@ mapElement.parentNode.addEventListener("mousemove", async (event) => {
       infobulle.innerText = `position: ${x+1} ${y+1}
       couleur:${casse.hexColor}
       pseudo:${tableOfPseudo[casse.author] ? tableOfPseudo[casse.author].last_name : (await getUserName(casse.author)).last_name}
-      département:${getRegion(x,y).name}`;
+      département:${getRegion(x+1,y+1).name}`;
     } else {
       infobulle.innerText = "error";
     }
