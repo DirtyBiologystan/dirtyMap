@@ -413,29 +413,30 @@ camMap.addEventListener("wheel", (event) => {
       scaleValue = scaleValue * 0.95;
 
     }
-
-    console.log(event.deltaY, scaleValue)
     mapElement.style.transform = `scale(${scaleValue}, ${scaleValue})`;
   }
 })
+mapElement.style.top = "0px";
+mapElement.style.left = "0px";
 
 document.addEventListener("keydown", (event) => {
   if ([83, 90, 68, 81, 65, 69].indexOf(event.keyCode) != -1) {
     if (!time) {
       time = setInterval(() => {
-        if (mapElement.style.top) {
-
+        if(moveY!==0){
           mapElement.style.top = (parseInt(mapElement.style.top) + moveY) + "px";
-        } else {
-          mapElement.style.top = "0px";
         }
-        if (mapElement.style.left) {
+        if(moveX!==0){
+
           mapElement.style.left = (parseInt(mapElement.style.left) + moveX) + "px";
-        } else {
-          mapElement.style.left = "0px";
         }
+        mapElement.style["transform-origin"] = `${(camMap.clientWidth/2)-parseInt(mapElement.style.left)}px ${(camMap.clientHeight/2)-parseInt(mapElement.style.top)}px`;
+
         scaleValue = scaleValue * scale;
-        mapElement.style.transform = `scale(${scaleValue}, ${scaleValue})`;
+        if(scale!==1){
+          mapElement.style.transform = `scale(${scaleValue}, ${scaleValue})`;
+        }
+
       }, 10)
     }
   }
