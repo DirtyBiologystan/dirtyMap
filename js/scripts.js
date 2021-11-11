@@ -17,6 +17,8 @@ window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndex
 window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
 window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange;
 
+let apiURL = "https://api.codati.ovh";
+let flagURL = "https://api-flag.fouloscopie.com/flag";
 const socket = io("https://api.codati.ovh/");
 socket.on("connect", () => {
   socket.emit("newPixel");
@@ -55,7 +57,7 @@ var oReq = new XMLHttpRequest();
 oReq.addEventListener("load", (event) => {
   regions = JSON.parse(event.target.response);
 })
-oReq.open("GET", `https://api.codati.ovh/departements/`);
+oReq.open("GET", `${apiURL}/departements/`);
 
 oReq.send();
 const text = document.getElementById("text");
@@ -287,7 +289,7 @@ oReq.addEventListener("load", (event) => {
 
 });
 
-oReq.open("GET", "https://api-flag.fouloscopie.com/flag");
+oReq.open("GET", flagURL);
 
 oReq.send();
 
@@ -362,7 +364,7 @@ async function getUserName(author) {
           objectStore.add(tableOfPseudo[author]);
           resolve(tableOfPseudo[author]);
         })
-        oReq.open("GET", `https://api.codati.ovh/users/${author}`);
+        oReq.open("GET", `${apiURL}/users/${author}`);
 
         oReq.send();
       }
@@ -585,7 +587,7 @@ textResearchpseudo.addEventListener("keyup", (event) => {
       textInfoPixel.innerHTML = `nombre de résulta:${pixels.length}`;
       textInfoPixel.append(list);
     })
-    oReq.open("GET", `https://api.codati.ovh/pixels/?q=${event.target.value}`);
+    oReq.open("GET", `${apiURL}/pixels/?q=${event.target.value}`);
 
     oReq.send();
   } else {
