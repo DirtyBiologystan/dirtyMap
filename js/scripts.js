@@ -142,7 +142,7 @@ oReq.addEventListener("load", (event) => {
   countColors = datas.reduce((accu, casse, i) => {
     const {
       name
-    } = getRegion(coordonne[i].x, coordonne[i].y);
+    } = getRegion(coordonne[i].x+1, coordonne[i].y+1);
     if (!regionColor[name]) {
       regionColor[name] = []
     }
