@@ -5,11 +5,10 @@ body {
 
 a {
   text-decoration: none;
-  color:#000;
-
+  color: #000;
 }
-a:visited{
-  color:#000;
+a:visited {
+  color: #000;
 }
 
 .header-container {
@@ -562,6 +561,11 @@ h6 {
 }
 
 .theo-link {
+  color: white;
+  text-decoration: underline;
+}
+
+.theo-link:visited {
   color: white;
 }
 
