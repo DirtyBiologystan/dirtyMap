@@ -4,7 +4,12 @@ body {
 }
 
 a {
-  color: #00d3ff;
+  text-decoration: none;
+  color:#000;
+
+}
+a:visited{
+  color:#000;
 }
 
 .header-container {
