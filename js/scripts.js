@@ -177,7 +177,7 @@ oReq.addEventListener("load", (event) => {
   }, {});
 
   countColors = Object.keys(countColors).reduce((accu, color) => {
-    if (countColors[color] > 50) {
+    if (countColors[color] > 200) {
       accu[color] = countColors[color];
     }
     return accu;
