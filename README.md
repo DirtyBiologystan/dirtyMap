@@ -12,5 +12,5 @@ DirtyMap est un site regroupant diverses statistiques du Dirtybiologistan ainsi 
 
 - Site réalisé par : CoDaTi#3827
 - Design du site par : [Théo](https://theomigeat.com/) (#2422)
-- Graphique : Kabolop#1089
-- Liste des départements, coordonnées et discord des régions : youkou#0125
+- Graphique : [youkou#0125](http://frompixel.ovh/) (#2422)
+- Liste des départements, coordonnées et discord des régions : Kabolop#1089
