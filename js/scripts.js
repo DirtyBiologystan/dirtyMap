@@ -260,7 +260,7 @@ oReq.addEventListener("load", (event) => {
       return option;
     })
   );
-  nbPixels.innerHTML = `Nombre total de pixels : ${total} soit ${table.length} X ${table[0].length}`;
+  nbPixels.innerHTML = `Nombre total de pixels : ${total} soit ${table.length}x${table[0].length}`;
 
   selectionRegion.addEventListener("change", (event) => {
     if (event.target.value === "tout") {

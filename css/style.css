@@ -228,7 +228,7 @@ main .dashboard section p {
   align-items: flex-start;
   align-content: center;
 
-  width: 45%;
+  width: 44%;
   height: 125px;
 
   padding: 20px;
@@ -404,4 +404,190 @@ h6 {
 #barnav button:hover {
   cursor: pointer;
   opacity: 1;
+}
+
+/* Responsive */
+
+@media screen and (max-width: 1700px) {
+  main .dashboard section {
+    width: 250px;
+    height: 100px;
+  }
+}
+
+@media screen and (max-width: 1530px) {
+  main .dashboard {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  header article {
+    width: 70%;
+  }
+
+  main {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .color {
+    width: 95%;
+  }
+
+  .search section {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 860px) {
+  header article {
+    width: 80%;
+  }
+
+  main {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  main .dashboard {
+    flex-direction: column;
+  }
+
+  main .dashboard section {
+    width: 100%;
+    height: 80px;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  header h1 {
+    font-size: 52px;
+  }
+
+  header p {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .header-container {
+    height: 40vh;
+  }
+
+  header h1 {
+    font-size: 42px;
+    line-height: 50px;
+  }
+
+  header p {
+    font-size: 14px;
+  }
+
+  header article {
+    width: 80%;
+    padding-top: 7vh;
+  }
+
+  main {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  main h2 {
+    font-size: 24px;
+  }
+
+  main .dashboard section {
+    height: auto;
+  }
+
+  main .dashboard section i {
+    font-size: 20px;
+  }
+
+  main .dashboard section p {
+    font-size: 14px;
+  }
+
+  main .dashboard span {
+    font-size: 14px;
+    text-align: left;
+  }
+
+  .color input[type="color"] {
+    width: 18px;
+    height: 18px;
+  }
+
+  .color input[type="text"] {
+    font-size: 14px;
+  }
+
+  .color p {
+    font-size: 14px;
+  }
+
+  .search section i {
+    font-size: 20px;
+  }
+
+  .search section input,
+  .search section p,
+  .search section b,
+  .search section span,
+  .search section div {
+    font-size: 14px;
+  }
+
+  .info-map-key {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  header h1 {
+    font-size: 32px;
+    line-height: 35px;
+  }
+}
+
+.theo-link {
+  color: white;
+}
+
+.theo-link:hover {
+  animation: rainbow 1.5s linear infinite;
+}
+
+@keyframes rainbow {
+  0% {
+    color: white;
+  }
+  12% {
+    color: #8f7de8;
+  }
+  24% {
+    color: #e87dc4;
+  }
+  36% {
+    color: #e87d7d;
+  }
+  48% {
+    color: #e8df7d;
+  }
+  60% {
+    color: #a1e87d;
+  }
+  72% {
+    color: #7de8b3;
+  }
+  84%,
+  100% {
+    color: white;
+  }
 }
