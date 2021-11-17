@@ -413,6 +413,10 @@ h6 {
 /* Responsive */
 
 @media screen and (max-width: 1700px) {
+  header article {
+    padding-top: 10vh;
+  }
+
   main .dashboard section {
     width: 250px;
     height: 100px;
